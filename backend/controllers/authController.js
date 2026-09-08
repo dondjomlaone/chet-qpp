@@ -4,10 +4,10 @@ const bcrypt = require("bcryptjs");
 
 // Registrujem novog korisnika
 const registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, phone, password } = req.body;
 
     // Provjeravam da li su svi potrebni podaci poslati
-    if (!username || !email || !password) {
+    if (!username || !email || !phone || !password) {
         return res.status(400).json({ message: "Svi podaci su obavezni" });
     }
 
@@ -25,6 +25,7 @@ const registerUser = async (req, res) => {
     const newUser = new User({
         username,
         email,
+        phone,
         password: hashedPassword,
     });
 
@@ -39,6 +40,7 @@ const registerUser = async (req, res) => {
         user: {
             id: newUser._id,
             username: newUser.username,
+            phone: newUser.phone,
             email: newUser.email
         }
     });
