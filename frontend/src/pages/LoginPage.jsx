@@ -13,7 +13,7 @@ const LoginPage = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handlerSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("")
         setLoeading(true)
@@ -30,91 +30,68 @@ const LoginPage = () => {
     };
 
     return (
-       <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
-    <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
 
-        <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-slate-800">
-                Prijavi se
-            </h2>
+            <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 w-full max-w-md">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">
+                    Prijava
+                </h2>
+                <p className="text-gray-400 mt-2 mb-6">Dobrodošao nazad!</p>
 
-            <p className="text-slate-500 mt-2">
-                Dobrodošao nazad!
-            </p>
-        </div>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            placeholder="Unesite email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                        />
+                    </div>
 
-        <form onSubmit={handlerSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Lozinka
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="Unesite lozinku"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                        />
+                    </div>
 
-            <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Email
-                </label>
+                    {error && (
+                        <p className="text-sm text-pink-300 bg-pink-500/10 border border-pink-500/30 rounded-lg px-4 py-3">
+                            {error}
+                        </p>
+                    )}
 
-                <input
-                    type="email"
-                    placeholder="Unesite email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300
-                    outline-none transition
-                    focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                    placeholder:text-slate-400"
-                />
-            </div>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-gradient-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
+                    >
+                        {loading ? "Prijava u toku..." : "Uloguj se"}
+                    </button>
+                </form>
 
-            <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Lozinka
-                </label>
-
-                <input
-                    type="password"
-                    placeholder="Unesite lozinku"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300
-                    outline-none transition
-                    focus:border-blue-500 focus:ring-2 focus:ring-blue-200
-                    placeholder:text-slate-400"
-                />
-            </div>
-
-            {error && (
-                <p className="text-sm text-red-500 bg-red-50 border border-red-200
-                rounded-lg px-4 py-3">
-                    {error}
+                <p className="text-center text-sm text-gray-400 mt-6">
+                    Nemaš nalog?{" "}
+                    <Link to="/register" className="text-cyan-400 font-semibold hover:text-cyan-300 hover:underline">
+                        Registruj se
+                    </Link>
                 </p>
-            )}
-
-            <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 px-4 rounded-xl
-                bg-blue-600 text-white font-semibold
-                hover:bg-blue-700
-                active:scale-[0.98]
-                transition-all duration-200
-                disabled:bg-blue-300 disabled:cursor-not-allowed"
-            >
-                {loading ? "Prijava u toku..." : "Uloguj se"}
-            </button>
-        </form>
-
-        <p className="text-center text-sm text-slate-500 mt-6">
-            Nemaš nalog?{" "}
-            <Link
-                to="/register"
-                className="text-blue-600 font-semibold
-                hover:text-blue-700 hover:underline"
-            >
-                Registruj se
-            </Link>
-        </p>
-
-    </div>
-</div>
+            </div>
+        </div>
 
     );
 };
