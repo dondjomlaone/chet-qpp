@@ -14,15 +14,22 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     },
-
     phone:{
       type: Number,
       required:true,
-
     },
     password: {
     type: String,
     required: true,
+  },
+  bio:{
+    type: String,
+    default:"",
+    maxlength: 200,
+  },
+  avatar:{
+    type: String,
+    default:"",
   },
 },
 {

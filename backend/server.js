@@ -13,12 +13,16 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
 const messageRoutes = require("./routes/messageRoutes");
 app.use("/api/messages", messageRoutes);
+
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
@@ -43,8 +47,15 @@ const io = new Server(server, {
   },
 });
 
+const onlineUsers = new Map(); //socket.id -> {id, username}
+
 io.on("connection", (socket) => {
   console.log("🔌 Korisnik povezan:", socket.id);
+
+  socket.on("userConnected", (userData)=>{
+    onlineUsers.set(socket.id, userData);
+    io.emit("onlineUsers", Array.from(onlineUsers.values()));
+  })
 
   socket.on("sendMessage", async (data) => {
     try {
@@ -57,7 +68,7 @@ io.on("connection", (socket) => {
 
       await newMessage.save();
 
-      const populatedMessage = await newMessage.populate("sender", "username");
+      const populatedMessage = await newMessage.populate("sender", "username avatar");
 
       io.emit("receiveMessage", populatedMessage);
     } catch (error) {
@@ -68,6 +79,8 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("❌ Korisnik se odvojio:", socket.id);
+    onlineUsers.delete(socket.id);
+    io.emit("onlineUsers", Array.from(onlineUsers.values()))
   })
 })
 
