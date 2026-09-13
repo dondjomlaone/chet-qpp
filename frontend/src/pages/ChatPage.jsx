@@ -68,7 +68,7 @@ const ChatPage = () => {
       socket.off("onlineUsers");
       socket.disconnect();
     };
-  }, [token]);
+  }, [token, user]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,7 +95,7 @@ const ChatPage = () => {
       {/* Sidebar */}
       <div className="relative z-10 w-64 bg-black/40 backdrop-blur-xl border-r border-white/10 flex flex-col">
         <div className="p-4 border-b border-white/10">
-          <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400 tracking-wide">
+          <h2 className="text-xl font-black text-transparent bg-clip-text bg-linear-to-r from-pink-500 to-cyan-400 tracking-wide">
             SECRET CHAT
           </h2>
           <p className="text-sm text-gray-400 mt-1">Ćao, {user?.username}</p>
@@ -133,7 +133,7 @@ const ChatPage = () => {
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 transition-all py-2 rounded-lg text-sm font-semibold text-white shadow-lg shadow-pink-500/30"
+            className="w-full bg-linear-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 transition-all py-2 rounded-lg text-sm font-semibold text-white shadow-lg shadow-pink-500/30"
           >
             Odjavi se
           </button>
@@ -156,7 +156,7 @@ const ChatPage = () => {
                 className={`flex items-end gap-2 ${isOwnMessage ? "justify-end" : "justify-start"}`}
               >
                 {!isOwnMessage && (
-                  <div className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center text-xs font-bold text-white flex-shrink-0 ring-2 ring-white/10 ${!getAvatarUrl(msg.sender?.avatar) ? getAvatarColor(msg.sender?.username) : ""}`}>
+                  <div className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center text-xs font-bold text-white shrink-0 ring-2 ring-white/10 ${!getAvatarUrl(msg.sender?.avatar) ? getAvatarColor(msg.sender?.username) : ""}`}>
                     {getAvatarUrl(msg.sender?.avatar) ? (
                       <img src={getAvatarUrl(msg.sender.avatar)} alt={msg.sender?.username} className="w-full h-full object-cover" />
                     ) : (
@@ -167,7 +167,7 @@ const ChatPage = () => {
 
                 <div className={`max-w-xs px-4 py-2 rounded-2xl ${
                   isOwnMessage
-                    ? "bg-gradient-to-r from-pink-600 to-cyan-600 text-white rounded-br-sm shadow-lg shadow-pink-500/20"
+                    ? " from-pink-600 to-cyan-600 text-white rounded-br-sm shadow-lg shadow-pink-500/20"
                     : "bg-white/10 backdrop-blur-md border border-white/10 text-gray-100 rounded-bl-sm"
                 }`}>
                   {!isOwnMessage && (
@@ -193,7 +193,7 @@ const ChatPage = () => {
           />
           <button
             type="submit"
-            className="bg-gradient-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg shadow-pink-500/30"
+            className="from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg shadow-pink-500/30"
           >
             Pošalji
           </button>
