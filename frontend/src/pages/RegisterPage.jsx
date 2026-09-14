@@ -40,7 +40,7 @@ const RegisterPage = () => {
   <div className="relative w-full max-w-md bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8">
 
     <div className="text-center mb-8">
-      <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">
+      <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-linear-to-r from-pink-500 to-cyan-400">
         Registracija
       </h2>
       <p className="text-gray-400 mt-2">Kreiraj svoj nalog</p>
@@ -113,7 +113,7 @@ const RegisterPage = () => {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
+        className="w-full bg-linear-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
       >
         {loading ? "Registracija je u toku..." : "Registruj se"}
       </button>

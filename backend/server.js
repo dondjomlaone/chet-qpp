@@ -47,14 +47,22 @@ const io = new Server(server, {
   },
 });
 
-const onlineUsers = new Map(); //socket.id -> {id, username}
+const onlineUsers = new Map(); //socket.id -> userData(za brzo pronalazenje pri disconect-u)
+
+const getUniqueOnlineUsers = () => {
+  const uniqueUsers = new Map(); // user.id -> userData(deduplicirano)
+  onlineUsers.forEach((userData) => {
+    uniqueUsers.set(userData.id, userData);
+  })
+  return Array.from(uniqueUsers.values())
+};
 
 io.on("connection", (socket) => {
   console.log("🔌 Korisnik povezan:", socket.id);
 
   socket.on("userConnected", (userData)=>{
     onlineUsers.set(socket.id, userData);
-    io.emit("onlineUsers", Array.from(onlineUsers.values()));
+    io.emit("onlineUsers", getUniqueOnlineUsers());
   })
 
   socket.on("sendMessage", async (data) => {
@@ -80,7 +88,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("❌ Korisnik se odvojio:", socket.id);
     onlineUsers.delete(socket.id);
-    io.emit("onlineUsers", Array.from(onlineUsers.values()))
+    io.emit("onlineUsers", getUniqueOnlineUsers())
   })
 })
 

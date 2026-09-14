@@ -41,7 +41,9 @@ const registerUser = async (req, res) => {
             id: newUser._id,
             username: newUser.username,
             phone: newUser.phone,
-            email: newUser.email
+            email: newUser.email,
+            bio: newUser.bio,
+            avatar: newUser.avatar,
         }
     });
 }
@@ -77,7 +79,9 @@ const loginUser = async (req, res) => {
             user: {
                 id: user._id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                bio: user.bio,
+                avatar: user.avatar
             }
         });
     } catch (error) {

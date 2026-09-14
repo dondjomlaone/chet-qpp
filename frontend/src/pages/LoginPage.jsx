@@ -35,7 +35,7 @@ const LoginPage = () => {
             <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
 
             <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 w-full max-w-md">
-                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-linear-to-r  from-pink-500 to-cyan-400">
                     Prijava
                 </h2>
                 <p className="text-gray-400 mt-2 mb-6">Dobrodošao nazad!</p>
@@ -78,7 +78,7 @@ const LoginPage = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-gradient-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
+                        className="w-full bg-linear-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
                     >
                         {loading ? "Prijava u toku..." : "Uloguj se"}
                     </button>

@@ -143,7 +143,7 @@ const ChatPage = () => {
       {/* Glavni chat deo */}
       <div className="relative z-10 flex-1 flex flex-col">
         <div className="bg-black/30 backdrop-blur-xl border-b border-white/10 p-4">
-          <h2 className="text-lg font-bold text-white tracking-wide">Opšti chat</h2>
+          <h2 className="text-xl font-black text-transparent bg-clip-text bg-linear-to-r from-pink-500 to-cyan-400 tracking-wide">GTA VI BALKAN</h2>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
