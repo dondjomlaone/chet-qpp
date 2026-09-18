@@ -24,6 +24,9 @@ app.use("/api/messages", messageRoutes);
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
+const uploadRoutes = require("./routes/uploadRoutes");
+app.use("/api/upload", uploadRoutes);
+
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });
@@ -67,11 +70,15 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", async (data) => {
     try {
-      const { senderId, text } = data;
+      const { senderId, text, mediaUrl, mediaType } = data;
 
       const newMessage = new Message({
         sender: senderId,
-        text: text,
+        text: text || "",
+        attachment: {
+            url: mediaUrl || "",
+            type: mediaType || null,
+        },
       });
 
       await newMessage.save();
@@ -83,6 +90,34 @@ io.on("connection", (socket) => {
       console.log("Greška pri slanju poruke:", error);
     }
 
+  })
+
+  socket.on("sendPrivateMessage", async(data)=>{
+    try{
+      const { senderId, recipientId, text, mediaUrl, mediaType } = data;
+
+      const newMessage = new Message({
+        sender: senderId,
+        recipient: recipientId,
+        text: text || "",
+        attachment: {
+            url: mediaUrl || "",
+            type: mediaType || null,
+        },
+      });
+
+      await newMessage.save();
+
+      const populatedMessage = await newMessage.populate("sender", "username avatar");
+
+      onlineUsers.forEach((userData, socketId) =>{
+        if(userData.id === senderId || userData.id === recipientId){
+          io.to(socketId).emit("receivePrivateMessage", populatedMessage)
+        }
+      })
+    } catch (error){
+      console.log("Greška pri slanju privatne poruke:", error);
+    }
   })
 
   socket.on("disconnect", () => {

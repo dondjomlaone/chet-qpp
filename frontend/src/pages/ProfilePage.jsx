@@ -76,25 +76,33 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-md">
+        <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#0f0c29]">
+            {/* Neonski krugovi u pozadini */}
+            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-pink-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
+
+            <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8 w-full max-w-md">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800">Moj profil</h2>
-                    <Link to="/chat" className="text-sm text-blue-600 hover:underline">
+                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-pink-500 to-cyan-400">
+                        Moj profil
+                    </h2>
+                    <Link to="/chat" className="text-sm text-cyan-400 hover:text-cyan-300 hover:underline">
                         Nazad na chat
                     </Link>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="flex flex-col items-center">
-                        <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden mb-3 flex items-center justify-center">
-                            {previewUrl ? (
-                                <img src={previewUrl} alt="Avatar" className="w-full h-full object-cover" />
-                            ) : (
-                                <span className="text-gray-400 text-sm">Bez slike</span>
-                            )}
+                        <div className="relative">
+                            <div className="w-24 h-24 rounded-full bg-white/5 border-2 border-white/10 overflow-hidden mb-3 flex items-center justify-center ring-4 ring-pink-500/20">
+                                {previewUrl ? (
+                                    <img src={previewUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                ) : (
+                                    <span className="text-gray-500 text-sm">Bez slike</span>
+                                )}
+                            </div>
                         </div>
-                        <label className="cursor-pointer text-sm text-blue-600 hover:underline">
+                        <label className="cursor-pointer text-sm text-cyan-400 hover:text-cyan-300 hover:underline">
                             Promeni sliku
                             <input
                                 type="file"
@@ -106,7 +114,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Opis (bio)
                         </label>
                         <textarea
@@ -115,18 +123,26 @@ const ProfilePage = () => {
                             maxLength={200}
                             rows={4}
                             placeholder="Napiši nešto o sebi..."
-                            className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all resize-none"
                         />
-                        <p className="text-xs text-gray-400 text-right mt-1">{bio.length}/200</p>
+                        <p className="text-xs text-gray-500 text-right mt-1">{bio.length}/200</p>
                     </div>
 
-                    {error && <p className="text-sm text-red-600">{error}</p>}
-                    {success && <p className="text-sm text-green-600">{success}</p>}
+                    {error && (
+                        <p className="text-sm text-pink-300 bg-pink-500/10 border border-pink-500/30 rounded-lg px-4 py-3">
+                            {error}
+                        </p>
+                    )}
+                    {success && (
+                        <p className="text-sm text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 rounded-lg px-4 py-3">
+                            {success}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white py-2 rounded-lg text-sm font-medium disabled:opacity-50"
+                        className="w-full bg-linear-to-r from-pink-600 to-cyan-500 hover:from-pink-500 hover:to-cyan-400 transition-all text-white py-3 rounded-lg font-semibold disabled:opacity-50 shadow-lg shadow-pink-500/30"
                     >
                         {loading ? "Čuvanje..." : "Sačuvaj izmene"}
                     </button>

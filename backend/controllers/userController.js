@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-const updateProfile = async(req, res) =>{
+const updateProfile = async (req, res) =>{
     try{
         const user = await User.findById(req.userId);
 
@@ -47,4 +47,18 @@ const getProfile = async(req, res) => {
     }
 }
 
-module.exports = {updateProfile, getProfile};
+const getUserById = async (req, res) => {
+    try{
+        const user = await User.findById(req.params.id).select("-password -email")
+
+        if(!user) {
+            return res.status(400).json({ message: "Korisnik nije pronađen" })
+        }
+
+        res.status(200).json(user)
+    } catch(error) {
+        res.status(500).json({ message: "Greška na serveru", error: error.message})
+    };
+}
+
+module.exports = {updateProfile, getProfile, getUserById};
